@@ -5,6 +5,17 @@
 - REST API
 - HTML Reporter
 
+## Detalle del proceso
+- Crear una nueva colección en postman
+- En la nueva colección asignar variable: baseUrl(https://fakestoreapi.com)
+- Crear request (de acuerdo a lo indicado y a la solicitud)
+- Ingresar la URL (ejm: {{baseUrl}/product/1} - tomado del caso de prueba 1)
+- Presionar el botón send
+- Agregar validaciones en la pestaña test o Scripts (Automatización de casos de prueba de acuerdo a las validaciones requeridas)
+- Una vez configuradas las validaciones, clic en Send (Se despliega la sección Test Result)
+- Se visualiza en verde (PASSED) casos de prueba éxitosos
+- Se visualiza en rojo (FAILED) casos fallidos.
+  
 ## Casos automatizados
 
 - CP01 - Obtener producto específico
