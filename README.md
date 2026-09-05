@@ -8,4 +8,8 @@ HTTP Request(JMeter)
 HTTP Header Manager (JMeter0)
 Response Assertion (JMeter)
 Agreate Reporte (JMeter)
-# PPaso a paso
+## Paso a paso
+* Se crea el archivo que contiene el registro de usuarios y contraseñas (usuario.csv) 
+* Crear un Test Plan en JMeter
+* Añadir y configurar Thread Group (Parámetros: number of Theads(usur): 10, 
+*   
