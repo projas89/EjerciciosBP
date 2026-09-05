@@ -1,0 +1,314 @@
+{
+  "info": {
+    "_postman_id": "3ab90a05-d5bc-4138-8bd4-0f7a88eec65e",
+    "name": "AutomatizaciónAPI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30233760",
+    "_collection_link": "https://go.postman.co/collection/30233760-3ab90a05-d5bc-4138-8bd4-0f7a88eec65e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "CP001-ObtenerProductosEspecificos",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const response = pm.response.json();\r\n\r\n// Validar status code\r\npm.test(\"Status code es 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\n// Validar que la respuesta sea un objeto\r\npm.test(\"La respuesta es un objeto\", function () {\r\n    pm.expect(response).to.be.an(\"object\");\r\n});\r\n\r\n// Validar ID\r\npm.test(\"El producto tiene un ID numérico\", function () {\r\n    pm.expect(response).to.have.property(\"id\");\r\n    pm.expect(response.id).to.be.a(\"number\");\r\n    pm.expect(response.id).to.be.above(0);\r\n});\r\n\r\n// Validar title\r\npm.test(\"El producto tiene un título válido\", function () {\r\n    pm.expect(response).to.have.property(\"title\");\r\n    pm.expect(response.title).to.be.a(\"string\");\r\n    pm.expect(response.title.length).to.be.above(0);\r\n});\r\n\r\n// Validar price\r\npm.test(\"El precio es de tipo number\", function () {\r\n    pm.expect(response).to.have.property(\"price\");\r\n    pm.expect(response.price).to.be.a(\"number\");\r\n});\r\n\r\n// Validar que el precio sea positivo\r\npm.test(\"El precio es mayor a cero\", function () {\r\n    pm.expect(response.price).to.be.above(0);\r\n});\r\n\r\n// Validar description\r\npm.test(\"La descripción es un string\", function () {\r\n    pm.expect(response).to.have.property(\"description\");\r\n    pm.expect(response.description).to.be.a(\"string\");\r\n});\r\n\r\n// Validar category\r\npm.test(\"La categoría es un string\", function () {\r\n    pm.expect(response).to.have.property(\"category\");\r\n    pm.expect(response.category).to.be.a(\"string\");\r\n});\r\n\r\n// Validar image\r\npm.test(\"La imagen es un string\", function () {\r\n    pm.expect(response).to.have.property(\"image\");\r\n    pm.expect(response.image).to.be.a(\"string\");\r\n});\r\n\r\n// Validar estructura rating\r\npm.test(\"El objeto rating tiene rate y count\", function () {\r\n    pm.expect(response).to.have.property(\"rating\");\r\n    pm.expect(response.rating).to.be.an(\"object\");\r\n    pm.expect(response.rating).to.have.property(\"rate\");\r\n    pm.expect(response.rating).to.have.property(\"count\");\r\n});\r\n\r\n// Validar tipos dentro de rating\r\npm.test(\"Rate y count son números\", function () {\r\n    pm.expect(response.rating.rate).to.be.a(\"number\");\r\n    pm.expect(response.rating.count).to.be.a(\"number\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/products/2",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "products",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CP002-ListarProductosPorCategoria",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const response = pm.response.json();\r\n\r\n// Validar status code\r\npm.test(\"Status code es 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\n// Validar que la respuesta sea un arreglo\r\npm.test(\"La respuesta es un arreglo\", function () {\r\n    pm.expect(response).to.be.an(\"array\");\r\n});\r\n\r\n// Validar que existan productos\r\npm.test(\"La lista contiene al menos un producto\", function () {\r\n    pm.expect(response.length).to.be.above(0);\r\n});\r\n\r\n// Validar categoría de todos los productos\r\npm.test(\"Todos los productos pertenecen a electronics\", function () {\r\n    response.forEach(product => {\r\n        pm.expect(product.category).to.eql(\"electronics\");\r\n    });\r\n});\r\n\r\n// Validar estructura de cada producto\r\npm.test(\"Cada producto contiene los campos requeridos\", function () {\r\n    response.forEach(product => {\r\n        pm.expect(product).to.have.property(\"id\");\r\n        pm.expect(product).to.have.property(\"title\");\r\n        pm.expect(product).to.have.property(\"price\");\r\n        pm.expect(product).to.have.property(\"description\");\r\n        pm.expect(product).to.have.property(\"category\");\r\n        pm.expect(product).to.have.property(\"image\");\r\n        pm.expect(product).to.have.property(\"rating\");\r\n    });\r\n});\r\n\r\n// Validar tipos de datos\r\npm.test(\"Los productos tienen los tipos de datos correctos\", function () {\r\n    response.forEach(product => {\r\n        pm.expect(product.id).to.be.a(\"number\");\r\n        pm.expect(product.title).to.be.a(\"string\");\r\n        pm.expect(product.price).to.be.a(\"number\");\r\n        pm.expect(product.description).to.be.a(\"string\");\r\n        pm.expect(product.category).to.be.a(\"string\");\r\n        pm.expect(product.image).to.be.a(\"string\");\r\n    });\r\n});\r\n\r\n// Validar rating\r\npm.test(\"Cada producto tiene rating válido\", function () {\r\n    response.forEach(product => {\r\n        pm.expect(product.rating).to.be.an(\"object\");\r\n        pm.expect(product.rating.rate).to.be.a(\"number\");\r\n        pm.expect(product.rating.count).to.be.a(\"number\");\r\n    });\r\n});\r\n\r\n// Validación adicional: precio positivo\r\npm.test(\"Todos los precios son mayores a cero\", function () {\r\n    response.forEach(product => {\r\n        pm.expect(product.price).to.be.above(0);\r\n    });\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/products/category/electronics",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "products",
+            "category",
+            "electronics"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CP003-Crear producto",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const response = pm.response.json();\r\n\r\n// Datos enviados en el request\r\nconst requestData = JSON.parse(pm.request.body.raw);\r\n\r\n// Validar status code\r\npm.test(\"Status code es 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n// Validar que retorna un ID\r\npm.test(\"El producto creado retorna un ID\", function () {\r\n    pm.expect(response).to.have.property(\"id\");\r\n    pm.expect(response.id).to.exist;\r\n});\r\n\r\n// Validar tipo del ID\r\npm.test(\"El ID retornado es numérico\", function () {\r\n    pm.expect(response.id).to.be.a(\"number\");\r\n});\r\n\r\n// Validar title\r\npm.test(\"El título coincide con el enviado\", function () {\r\n    pm.expect(response.title).to.eql(requestData.title);\r\n});\r\n\r\n// Validar price\r\npm.test(\"El precio coincide con el enviado\", function () {\r\n    pm.expect(response.price).to.eql(requestData.price);\r\n});\r\n\r\n// Validar description\r\npm.test(\"La descripción coincide con la enviada\", function () {\r\n    pm.expect(response.description).to.eql(requestData.description);\r\n});\r\n\r\n// Validar image\r\npm.test(\"La imagen coincide con la enviada\", function () {\r\n    pm.expect(response.image).to.eql(requestData.image);\r\n});\r\n\r\n// Validar category\r\npm.test(\"La categoría coincide con la enviada\", function () {\r\n    pm.expect(response.category).to.eql(requestData.category);\r\n});\r\n\r\n// Validar tipos de datos\r\npm.test(\"Los datos retornados tienen tipos correctos\", function () {\r\n    pm.expect(response.title).to.be.a(\"string\");\r\n    pm.expect(response.price).to.be.a(\"number\");\r\n    pm.expect(response.description).to.be.a(\"string\");\r\n    pm.expect(response.image).to.be.a(\"string\");\r\n    pm.expect(response.category).to.be.a(\"string\");\r\n});"
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"Producto Automatizado Postman\",\r\n    \"price\": 150.50,\r\n    \"description\": \"Producto creado mediante pruebas automatizadas en Postman\",\r\n    \"image\": \"https://example.com/producto.jpg\",\r\n    \"category\": \"electronics\"\r\n    }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/products",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CP004-ActualizarProducto",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const response = pm.response.json();\r\n\r\n// Datos enviados\r\nconst requestData = JSON.parse(pm.request.body.raw);\r\n\r\n// Validar Status Code\r\npm.test(\"Status code es 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\n// Validar que la respuesta sea un objeto\r\npm.test(\"La respuesta es un objeto\", function () {\r\n    pm.expect(response).to.be.an(\"object\");\r\n});\r\n\r\n// Validar ID\r\npm.test(\"El producto contiene un ID\", function () {\r\n    pm.expect(response).to.have.property(\"id\");\r\n    pm.expect(response.id).to.be.a(\"number\");\r\n});\r\n\r\n// Validar que el ID sea el producto actualizado\r\npm.test(\"El ID corresponde al producto actualizado\", function () {\r\n    pm.expect(response.id).to.eql(1);\r\n});\r\n\r\n// Validar título\r\npm.test(\"El título fue actualizado correctamente\", function () {\r\n    pm.expect(response.title).to.eql(requestData.title);\r\n});\r\n\r\n// Validar precio\r\npm.test(\"El precio fue actualizado correctamente\", function () {\r\n    pm.expect(response.price).to.eql(requestData.price);\r\n});\r\n\r\n// Validar descripción\r\npm.test(\"La descripción fue actualizada correctamente\", function () {\r\n    pm.expect(response.description).to.eql(requestData.description);\r\n});\r\n\r\n// Validar categoría\r\npm.test(\"La categoría fue actualizada correctamente\", function () {\r\n    pm.expect(response.category).to.eql(requestData.category);\r\n});\r\n\r\n// Validar imagen\r\npm.test(\"La imagen fue actualizada correctamente\", function () {\r\n    pm.expect(response.image).to.eql(requestData.image);\r\n});\r\n\r\n// Validar rating\r\npm.test(\"El rating existe\", function () {\r\n    pm.expect(response).to.have.property(\"rating\");\r\n    pm.expect(response.rating).to.be.an(\"object\");\r\n});\r\n\r\n// Validar rate\r\npm.test(\"El rate fue actualizado correctamente\", function () {\r\n    pm.expect(response.rating.rate).to.eql(requestData.rating.rate);\r\n});\r\n\r\n// Validar count\r\npm.test(\"El count fue actualizado correctamente\", function () {\r\n    pm.expect(response.rating.count).to.eql(requestData.rating.count);\r\n});\r\n\r\n// Validar tipos de datos\r\npm.test(\"Los tipos de datos son correctos\", function () {\r\n\r\n    pm.expect(response.id).to.be.a(\"number\");\r\n    pm.expect(response.title).to.be.a(\"string\");\r\n    pm.expect(response.price).to.be.a(\"number\");\r\n    pm.expect(response.description).to.be.a(\"string\");\r\n    pm.expect(response.category).to.be.a(\"string\");\r\n    pm.expect(response.image).to.be.a(\"string\");\r\n\r\n    pm.expect(response.rating).to.be.an(\"object\");\r\n    pm.expect(response.rating.rate).to.be.a(\"number\");\r\n    pm.expect(response.rating.count).to.be.a(\"number\");\r\n});\r\n\r\n// Validar precio positivo\r\npm.test(\"El precio es mayor a cero\", function () {\r\n    pm.expect(response.price).to.be.above(0);\r\n});\r\n\r\n// Validar rate dentro de rango\r\npm.test(\"El rate está entre 0 y 5\", function () {\r\n    pm.expect(response.rating.rate).to.be.at.least(0);\r\n    pm.expect(response.rating.rate).to.be.at.most(5);\r\n});\r\n\r\n// Validar count positivo\r\npm.test(\"El count es mayor o igual a cero\", function () {\r\n    pm.expect(response.rating.count).to.be.at.least(0);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"Producto Actualizado Postman\",\r\n    \"price\": 199.99,\r\n    \"description\": \"Producto actualizado mediante automatización en Postman\",\r\n    \"image\": \"https://example.com/producto-actualizado.jpg\",\r\n    \"category\": \"electronics\",\r\n    \"rating\": {\r\n        \"rate\": 4.8,\r\n        \"count\": 250\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/products/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "products",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CP005-ProductoNoEncontrado",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\n//Validar que la respuesta sea un objeto\r\npm.test(\"La respuesta es un objeto\", function () {\r\n    pm.expect(pm.response).to.be.an(\"object\");\r\n});\r\n\r\n// Validar que el producto no tenga datos válidos\r\npm.test(\"El producto inexistente no contiene información válida\", function () {\r\n    pm.expect(Object.keys(pm.response).length).to.eql(0);\r\n});"
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/products/999999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "products",
+            "999999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CP006-CategoriaInvalida",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const response = pm.response.json();\r\n\r\n// Validar status code\r\npm.test(\"Status code es 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\n// Validar que la respuesta sea un array\r\npm.test(\"La respuesta es un array\", function () {\r\n    pm.expect(response).to.be.an(\"array\");\r\n});\r\n\r\n// Validar que el array esté vacío\r\npm.test(\"La categoría inexistente retorna un array vacío\", function () {\r\n    pm.expect(response).to.be.empty;\r\n});\r\n\r\n//Validar que no hay productos \r\npm.test(\"No existen productos para la categoría solicitada\", function () {\r\n    pm.expect(response.length).to.eql(0);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/products/category/cateoria-inexistente",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "products",
+            "category",
+            "cateoria-inexistente"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CP008-ValidacionLimiteDeProductos",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const response = pm.response.json();\r\n\r\n// Validar status code\r\npm.test(\"Status code es 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\n// Validar que la respuesta sea un array\r\npm.test(\"La respuesta es un array\", function () {\r\n    pm.expect(response).to.be.an(\"array\");\r\n});\r\n\r\n// Validar máximo de 5 productos\r\npm.test(\"Retorna máximo 5 productos\", function () {\r\n    pm.expect(response.length).to.be.at.most(5);\r\n});\r\n\r\n// Validar que no esté vacío\r\npm.test(\"La respuesta contiene productos\", function () {\r\n    pm.expect(response.length).to.be.above(0);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/products?limit=5",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "products"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CP007-CrearProductosConDatosInvalidos",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const response = pm.response.json();\r\n\r\npm.test(\"La API responde correctamente\", function () {\r\n    pm.expect([200,201, 400, 422]).to.include(pm.response.code);\r\n});\r\n\r\npm.test(\"La respuesta es un objeto\", function () {\r\n    pm.expect(response).to.be.an(\"object\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/products",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CP008.1-ComprobarLista",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    },
+    {
+      "key": "totalProducts",
+      "value": ""
+    }
+  ]
+}
